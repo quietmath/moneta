@@ -1,0 +1,66 @@
+{
+  "name": "moneta",
+  "version": "0.1.0",
+  "description": "A Node.JS JSON store for lightweight database storage need.",
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "all": true,
+    "check-coverage": true,
+    "lines": 0,
+    "statements": 0,
+    "functions": 0,
+    "branches": 0,
+    "exclude": [
+      "**/example/**/*.js",
+      "**/example/**/*.ts",
+      "**/*.d.ts",
+      "**/*.test.js"
+    ],
+    "reporter": [
+      "text",
+      "cobertura",
+      "html"
+    ],
+    "report-dir": "./.nyc_output/coverage"
+  },
+  "license": "MIT",
+  "contributors": [
+    "Michael Szul <michael@szul.us>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quietmath/moneta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/quietmath/moneta/issues"
+  },
+  "homepage": "https://github.com/quietmath/moneta#readme",
+  "scripts": {
+    "build": "tsc",
+    "test": "nyc mocha ./**/test/*.test.js --ignore ./**/node_modules/** --exit",
+    "eslint": "eslint ./src/*.ts ./src/**/*.ts",
+    "eslint-fix": "eslint ./src/*.ts ./src/**/*.ts --fix"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "fs-extra": "^9.0.1"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.1",
+    "@types/dotenv": "^8.2.0",
+    "@types/fs-extra": "^9.0.2",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.14.0",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "exorcist": "^1.0.1",
+    "madge": "^3.11.0",
+    "mocha": "^8.2.0",
+    "nyc": "^15.1.0",
+    "rewire": "^5.0.0",
+    "ts-node": "^9.0.0",
+    "typeorm-model-generator": "^0.4.3",
+    "typescript": "^4.0.3"
+  }
+}
