@@ -7,3 +7,11 @@ export interface DBSettings {
     path: string;
     cacheTTL?: number;
 }
+
+export interface ResultSet {
+    type: 'select' | 'insert' | 'update' | 'delete';
+    success: boolean;
+    key: string;
+    requestedKey?: string;
+    value: any;
+}
