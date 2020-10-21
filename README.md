@@ -1,2 +1,3 @@
-# moneta
-A Node.JS JSON store for lightweight database storage needs,
+# Moneta
+
+A Node.JS JSON store for lightweight database storage need.
