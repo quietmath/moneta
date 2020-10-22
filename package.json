@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "description": "A Node.JS JSON store for lightweight database storage need.",
   "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
     "all": true,
     "check-coverage": true,
     "lines": 0,
@@ -37,7 +36,7 @@
   "homepage": "https://github.com/quietmath/moneta#readme",
   "scripts": {
     "build": "tsc",
-    "test": "nyc mocha ./**/test/*.test.js --ignore ./**/node_modules/** --exit",
+    "test": "nyc mocha ./**/test/*.test.js --ignore ./**/node_modules/**",
     "eslint": "eslint ./src/*.ts ./src/**/*.ts",
     "eslint-fix": "eslint ./src/*.ts ./src/**/*.ts --fix"
   },
@@ -47,7 +46,6 @@
     "node-cache": "^5.1.2"
   },
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/dotenv": "^8.2.0",
     "@types/fs-extra": "^9.0.2",
     "@types/mocha": "^8.0.3",
