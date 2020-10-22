@@ -15,3 +15,10 @@ export interface ResultSet {
     requestedKey?: string;
     value: any;
 }
+
+export interface Criteria {
+    key?: string;
+    where?: [key: string, value: string];
+    sort?: [key: string | number, direction: 'ASC' | 'DESC'];
+    limit?: number;
+}

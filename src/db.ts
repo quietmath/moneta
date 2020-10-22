@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import { DBSettings, ResultSet } from './schema';
+import { Criteria, DBSettings, ResultSet } from './schema';
 import { Cache } from './cache';
 
 /**
@@ -55,13 +55,48 @@ export class JSONStore extends Cache {
         this.set(this._dbPath, this._db);
         return this;
     }
-    public select(tableName: string, key?: string): ResultSet {
-        return {
-            type: 'select',
-            success: true,
-            key: key,
-            value: this._db[tableName][key] //Need conditional
-        };
+    public select(tableName: string, criteria?: string | Criteria): ResultSet {
+        if(typeof(criteria) === 'string') {
+            return {
+                type: 'select',
+                success: true,
+                key: criteria,
+                value: this._db[tableName][criteria]
+            };
+        }
+        let result = this._dbName[tableName];
+        if(criteria.key != null) {
+            result = result[criteria.key];
+        }
+        if(criteria.where != null) {
+            if(result instanceof Array) {
+                result = result.filter((e: any) => e[criteria.where[0]] == criteria.where[1]);
+            }
+        }
+        if(criteria.sort != null) {
+            if(typeof(criteria.sort[0]) === 'string') {
+                if(criteria.sort[1] === 'ASC') {
+                    result = result.sort((a: any, b: any) => a[criteria.sort[0]].localeCompare(b[criteria.sort[0]]));
+                }
+                else {
+                    result = result.sort((a: any, b: any) => b[criteria.sort[0]].localeCompare(a[criteria.sort[0]]));
+                }
+            }
+            else {
+                if(criteria.sort[1] === 'ASC') {
+                    result = result.sort((a: any, b: any) => b[criteria.sort[0]] - a[criteria.sort[0]]);
+                }
+                else {
+                    result = result.sort((a: any, b: any) => a[criteria.sort[0]] - b[criteria.sort[0]]);
+                }
+            }
+        }
+        if(criteria.limit) {
+            if(criteria instanceof Array && criteria.length > criteria.limit) {
+                result = result.slice(0, criteria.limit);
+            }
+        }
+        return result;
     }
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public insert(tableName: string, key: string, value: any): ResultSet {
