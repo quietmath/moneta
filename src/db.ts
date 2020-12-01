@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-import { Criteria, DBSettings, ResultSet } from './schema';
+import { Criteria, DBSettings, PairSet, ResultSet } from './schema';
 import { Cache } from './cache';
 
 /**
@@ -75,7 +75,7 @@ export class JSONStore extends Cache {
         }
         if(criteria.sort != null) {
             if(typeof(criteria.sort[0]) === 'string') {
-                if(criteria.sort[1] === 'ASC') {
+                if(criteria.sort[1].toUpperCase() === 'ASC') {
                     result = result.sort((a: any, b: any) => a[criteria.sort[0]].localeCompare(b[criteria.sort[0]]));
                 }
                 else {
@@ -83,7 +83,7 @@ export class JSONStore extends Cache {
                 }
             }
             else {
-                if(criteria.sort[1] === 'ASC') {
+                if(criteria.sort[1].toUpperCase() === 'ASC') {
                     result = result.sort((a: any, b: any) => b[criteria.sort[0]] - a[criteria.sort[0]]);
                 }
                 else {
@@ -96,7 +96,12 @@ export class JSONStore extends Cache {
                 result = result.slice(0, criteria.limit);
             }
         }
-        return result;
+        return {
+            type: 'select',
+            success: true,
+            key: criteria,
+            value: result
+        };
     }
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public insert(tableName: string, key: string, value: any): ResultSet {
@@ -118,6 +123,23 @@ export class JSONStore extends Cache {
             requestedKey: key,
             value: value
         };
+    }
+    public insertAll(tableName: string, pairs: PairSet[]): number {
+        let count = 0;
+        pairs.forEach((item: PairSet) => {
+            if(item != null && item.key != null) {
+                try {
+                    const result = this.insert(tableName, item.key, item.data);
+                    if(result.success) {
+                        count++;
+                    }
+                }
+                catch(e) {
+                    console.error(`Failed to insert record for ${ item.key }: ${ e }`);
+                }
+            }
+        });
+        return count;
     }
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     public update(tableName: string, key: string, value: any): ResultSet {

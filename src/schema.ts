@@ -8,10 +8,15 @@ export interface DBSettings {
     cacheTTL?: number;
 }
 
+export interface PairSet {
+    key: string,
+    data: any
+}
+
 export interface ResultSet {
     type: 'select' | 'insert' | 'update' | 'delete';
     success: boolean;
-    key: string;
+    key: string | Criteria;
     requestedKey?: string;
     value: any;
 }
