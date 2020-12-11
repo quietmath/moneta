@@ -21,11 +21,11 @@ export class JSONStore extends Cache {
             this._dbName = this._settings.dbname;
         }
         const name = this._dbName || 'db.json';
-        const path = this._settings.path || process.cwd();
-        this._dbPath = `${ path } / ${ name }`;
+        const path = this._settings?.path || process.cwd();
+        this._dbPath = `${ path }/${ name }`;
         this._db = this.getSync(this._dbPath);
         if(this._db == null) {
-            const exists = fs.statSync(this._dbPath);
+            const exists = fs.existsSync(this._dbPath);
             if(exists) {
                 const buffer = fs.readFileSync(this._dbPath, { encoding: 'utf8' });
                 try {
