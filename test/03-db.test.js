@@ -19,7 +19,7 @@ describe('Unit tests for JSONStore class initialization', function() {
         assert.notEqual(db, null);
     });
 });
-/*
+
 describe('Unit tests for JSONStore class methods', function() {
     
     const key = (new Date()).getMilliseconds();
@@ -174,4 +174,3 @@ describe('Unit tests for various criteria selection', function() {
     });
 
 });
-*/
