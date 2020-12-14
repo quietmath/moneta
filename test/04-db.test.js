@@ -5,21 +5,6 @@ const _ = require('lodash');
 const { JSONStore } = require('../dist/db');
 const { Pair } = require('../dist/pair');
 
-describe('Unit tests for JSONStore class initialization', function() {
-    it('should create a JSONStore object with just a name', function() {
-        const db = new JSONStore('codepunk');
-        assert.notEqual(db, null);
-    });
-    it('should create a JSONStore object with a settings object', function() {
-        const db = new JSONStore({
-            dbname: 'codepunk',
-            path: '/home/szul/code/quietmath',
-            cacheTTL: 4800
-        });
-        assert.notEqual(db, null);
-    });
-});
-
 describe('Unit tests for JSONStore class methods', function() {
     
     const key = (new Date()).getMilliseconds();
@@ -37,7 +22,7 @@ describe('Unit tests for JSONStore class methods', function() {
     
     const db = new JSONStore({
         dbname: 'codepunk',
-        path: '/home/szul/code/quietmath',
+        path: '/home/szul/code/quietmath/moneta',
         cacheTTL: 3600
     });
 
@@ -82,7 +67,7 @@ describe('Unit tests for JSONStore class methods', function() {
         assert.equal(result.key, key);
         result = db.select('temp', key);
         assert.equal(result.success, true);
-        assert.equal(result.key, criteria);
+        assert.equal(result.key, key);
         assert.equal(result.value, null);
     });
     it('should commit data', function() {
@@ -92,7 +77,7 @@ describe('Unit tests for JSONStore class methods', function() {
     });
 });
 
-describe('Unit tests for bulk actions', function() {
+describe('Unit tests for bulk actions and criteria selection', function() {
     
     const data = [
         {
@@ -135,26 +120,17 @@ describe('Unit tests for bulk actions', function() {
 
     const db = new JSONStore({
         dbname: 'codepunk',
-        path: '/home/szul/code/quietmath',
+        path: '/home/szul/code/quietmath/moneta',
         cacheTTL: 3600
     });
 
     it('should insert multiple records', function() {
+        db.create('temp');
         const pairs = Pair.asPairs([1, 2, 3, 4], data);
         const result = db.insertAll('temp', pairs);
         db.commit();
         assert.notEqual(result, null);
         assert.equal(result, 4);
-    });
-
-});
-
-describe('Unit tests for various criteria selection', function() {
-
-    const db = new JSONStore({
-        dbname: 'codepunk',
-        path: '/home/szul/code/quietmath',
-        cacheTTL: 3600
     });
 
     it('should select based on byline', function() {
