@@ -10,7 +10,8 @@
         "skipDefaultLibCheck": true,
         "resolveJsonModule": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "emitDecoratorMetadata": true,
+        "lib": ["ESNext"]
     },
     "include": [
         "src/**/*"

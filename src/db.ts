@@ -1,4 +1,5 @@
 import * as fs from 'fs-extra';
+import { cloneDeep } from 'lodash';
 import { Criteria, DBSettings, PairSet, ResultSet } from './schema';
 import { Cache } from './cache';
 
@@ -64,18 +65,17 @@ export class JSONStore extends Cache {
                 value: this._db[tableName][criteria]
             };
         }
-        let result = this._db[tableName];
+        let result = cloneDeep(this._db[tableName]);
         if(criteria.key != null) {
             result = result[criteria.key];
         }
         if(criteria.where != null) {
             try {
-                result = result.filter((e: any) => e[criteria.where[0]] == criteria.where[1]);
                 for(const r in result) {
                     // eslint-disable-next-line no-prototype-builtins
                     if(result.hasOwnProperty(r)) {
-                        if(r[criteria.where[0]] != r[criteria.where[1]]) {
-                            result[r] = undefined;
+                        if(result[r][criteria.where[0]] != criteria.where[1]) {
+                            delete result[r];
                         }
                     }
                 }
@@ -85,38 +85,24 @@ export class JSONStore extends Cache {
             }
         }
         if(criteria.sort != null) {
+            let r: any;
             if(typeof(criteria.sort[0]) === 'string') {
                 if(criteria.sort[1].toUpperCase() === 'ASC') {
-                    result = Object.keys(result)
-                        .sort((a: any, b: any) => a[criteria.sort[0]].localeCompare(b[criteria.sort[0]]))
-                        .reduce((prev, cur) => {
-                            return result[cur];
-                        }, {});
+                    r = Object.entries(result).sort((a: any, b: any) => a[1][criteria.sort[0]].localeCompare(b[1][criteria.sort[0]]));
                 }
                 else {
-                    result = Object.keys(result)
-                        .sort((a: any, b: any) => b[criteria.sort[0]].localeCompare(a[criteria.sort[0]]))
-                        .reduce((prev, cur) => {
-                            return result[cur];
-                        }, {});
+                    r = Object.entries(result).sort((a: any, b: any) => b[1][criteria.sort[0]].localeCompare(a[1][criteria.sort[0]]));
                 }
             }
             else {
                 if(criteria.sort[1].toUpperCase() === 'ASC') {
-                    result = Object.keys(result)
-                        .sort((a: any, b: any) => b[criteria.sort[0]] - a[criteria.sort[0]])
-                        .reduce((prev, cur) => {
-                            return result[cur];
-                        }, {});
+                    r = Object.entries(result).sort((a: any, b: any) => b[1][criteria.sort[0]]- a[1][criteria.sort[0]]);
                 }
                 else {
-                    result = Object.keys(result)
-                        .sort((a: any, b: any) => a[criteria.sort[0]] - b[criteria.sort[0]])
-                        .reduce((prev, cur) => {
-                            return result[cur];
-                        }, {});
+                    r = Object.entries(result).sort((a: any, b: any) => a[1][criteria.sort[0]]- b[1][criteria.sort[0]]);
                 }
             }
+            result = Object.fromEntries(r);
         }
         if(criteria.limit) {
             if(criteria instanceof Array && criteria.length > criteria.limit) {

@@ -21,7 +21,7 @@ describe('Unit tests for JSONStore class methods', function() {
     };
     
     const db = new JSONStore({
-        dbname: 'codepunk',
+        dbname: 'codepunk.json',
         path: '/home/szul/code/quietmath/moneta',
         cacheTTL: 3600
     });
@@ -119,7 +119,7 @@ describe('Unit tests for bulk actions and criteria selection', function() {
     ];
 
     const db = new JSONStore({
-        dbname: 'codepunk',
+        dbname: 'codepunk.json',
         path: '/home/szul/code/quietmath/moneta',
         cacheTTL: 3600
     });
@@ -137,7 +137,7 @@ describe('Unit tests for bulk actions and criteria selection', function() {
         const result = db.select('temp', { where: ['byline', 'michael szul'] });
         assert.notEqual(result, null);
         assert.notEqual(result.length, 0);
-        assert.equal(result[0].title, 'fake title');
+        assert.equal(result.value['1'].title, 'fake title');
     });
 
     it('should ssort based on byline and select', function() {
