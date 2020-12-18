@@ -140,13 +140,13 @@ describe('Unit tests for bulk actions and criteria selection', function() {
         assert.equal(result.value['1'].title, 'fake title');
     });
 
-    it('should ssort based on byline and select', function() {
+    it('should sort based on byline and select', function() {
         const result = db.select('temp', {
             sort: ['byline', 'ASC']
         });
         assert.notEqual(result, null);
         assert.notEqual(result.length, 0);
-        assert.equal(result[0].title, 'fake title 3');
+        assert.equal(result.value[0]['3'].title, 'fake title 3');
     });
 
 });

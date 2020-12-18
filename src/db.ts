@@ -85,7 +85,7 @@ export class JSONStore extends Cache {
             }
         }
         if(criteria.sort != null) {
-            let r: any;
+            let r: any[];
             if(typeof(criteria.sort[0]) === 'string') {
                 if(criteria.sort[1].toUpperCase() === 'ASC') {
                     r = Object.entries(result).sort((a: any, b: any) => a[1][criteria.sort[0]].localeCompare(b[1][criteria.sort[0]]));
@@ -102,7 +102,11 @@ export class JSONStore extends Cache {
                     r = Object.entries(result).sort((a: any, b: any) => a[1][criteria.sort[0]]- b[1][criteria.sort[0]]);
                 }
             }
-            result = Object.fromEntries(r);
+            result = r.map((e: any[]) => {
+                return {
+                    [e[0]]: e[1]
+                };
+            });
         }
         if(criteria.limit) {
             if(criteria instanceof Array && criteria.length > criteria.limit) {
