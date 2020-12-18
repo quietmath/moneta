@@ -1,5 +1,5 @@
 {
-  "name": "moneta",
+  "name": "@quietmath/moneta",
   "version": "0.1.0",
   "description": "A Node.JS JSON store for lightweight database storage need.",
   "nyc": {
@@ -64,5 +64,8 @@
     "ts-node": "^9.0.0",
     "typeorm-model-generator": "^0.4.3",
     "typescript": "^4.0.3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
