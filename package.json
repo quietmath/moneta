@@ -1,11 +1,11 @@
 {
   "name": "@quietmath/moneta",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Node.JS JSON store for lightweight database storage need.",
   "nyc": {
     "all": true,
     "check-coverage": true,
-    "lines": 0,
+    "lines": 75,
     "statements": 0,
     "functions": 0,
     "branches": 0,

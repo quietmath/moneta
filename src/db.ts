@@ -2,6 +2,7 @@ import * as fs from 'fs-extra';
 import { cloneDeep } from 'lodash';
 import { Criteria, DBSettings, PairSet, ResultSet } from './schema';
 import { Cache } from './cache';
+import { mapArray } from './util';
 
 /**
  * @module quietmath/moneta
@@ -66,6 +67,7 @@ export class JSONStore extends Cache {
             };
         }
         let result = cloneDeep(this._db[tableName]);
+        let arrayResult: any[];
         if(criteria.key != null) {
             result = result[criteria.key];
         }
@@ -102,22 +104,21 @@ export class JSONStore extends Cache {
                     r = Object.entries(result).sort((a: any, b: any) => a[1][criteria.sort[0]]- b[1][criteria.sort[0]]);
                 }
             }
-            result = r.map((e: any[]) => {
-                return {
-                    [e[0]]: e[1]
-                };
-            });
+            arrayResult = mapArray(r);
+        }
+        if(!arrayResult) {
+            arrayResult = mapArray(Object.entries(result));
         }
         if(criteria.limit) {
             if(criteria instanceof Array && criteria.length > criteria.limit) {
-                result = result.slice(0, criteria.limit);
+                arrayResult = arrayResult.slice(0, criteria.limit);
             }
         }
         return {
             type: 'select',
             success: true,
             key: criteria,
-            value: result
+            value: arrayResult
         };
     }
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

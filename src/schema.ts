@@ -18,7 +18,7 @@ export interface ResultSet {
     success: boolean;
     key: string | Criteria;
     requestedKey?: string;
-    value: any;
+    value: any | any[];
 }
 
 export interface Criteria {

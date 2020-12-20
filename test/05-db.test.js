@@ -137,7 +137,7 @@ describe('Unit tests for bulk actions and criteria selection', function() {
         const result = db.select('temp', { where: ['byline', 'michael szul'] });
         assert.notEqual(result, null);
         assert.notEqual(result.length, 0);
-        assert.equal(result.value['1'].title, 'fake title');
+        assert.equal(result.value[0].title, 'fake title');
     });
 
     it('should sort based on byline and select', function() {
@@ -146,7 +146,7 @@ describe('Unit tests for bulk actions and criteria selection', function() {
         });
         assert.notEqual(result, null);
         assert.notEqual(result.length, 0);
-        assert.equal(result.value[0]['3'].title, 'fake title 3');
+        assert.equal(result.value[0].title, 'fake title 3');
     });
 
 });
