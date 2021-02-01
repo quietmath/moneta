@@ -68,10 +68,10 @@ export class JSONStore extends Cache {
         }
         let result = cloneDeep(this._db[tableName]);
         let arrayResult: any[];
-        if(criteria.key != null) {
+        if(criteria?.key != null) {
             result = result[criteria.key];
         }
-        if(criteria.where != null) {
+        if(criteria?.where != null) {
             try {
                 for(const r in result) {
                     // eslint-disable-next-line no-prototype-builtins
@@ -86,7 +86,7 @@ export class JSONStore extends Cache {
                 console.error(`Cannot filter object: ${ e }`);
             }
         }
-        if(criteria.sort != null) {
+        if(criteria?.sort != null) {
             let r: any[];
             if(typeof(criteria.sort[0]) === 'string') {
                 if(criteria.sort[1].toUpperCase() === 'ASC') {
@@ -109,7 +109,7 @@ export class JSONStore extends Cache {
         if(!arrayResult) {
             arrayResult = mapArray(Object.entries(result));
         }
-        if(criteria.limit) {
+        if(criteria?.limit) {
             if(criteria instanceof Array && criteria.length > criteria.limit) {
                 arrayResult = arrayResult.slice(0, criteria.limit);
             }
