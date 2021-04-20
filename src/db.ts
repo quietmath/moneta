@@ -46,6 +46,12 @@ export class JSONStore extends Cache {
             }
         }
     }
+    public exists(tableName: string): boolean {
+        if(this._db[tableName] != null) {
+            return true;
+        }
+        return false;
+    }
     public create(tableName: string): JSONStore {
         this._db[tableName] = {};
         this.set(this._dbPath, this._db);
