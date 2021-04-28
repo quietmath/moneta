@@ -29,9 +29,9 @@ export class JSONStore extends Cache {
         if(this._db == null) {
             const exists = fs.existsSync(this._dbPath);
             if(exists) {
-                const buffer = fs.readFileSync(this._dbPath, { encoding: 'utf8' });
+                const contents = fs.readFileSync(this._dbPath, { encoding: 'utf8' });
                 try {
-                    this._db = JSON.parse(buffer.toString());
+                    this._db = JSON.parse(contents);
                     this.set(this._dbPath, this._db);
                 }
                 catch(e) {
