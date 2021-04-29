@@ -207,7 +207,7 @@ export class JSONStore extends Cache {
             value: null
         };
     }
-    public async commit(): Promise<void> {
-        fs.writeFile(this._dbPath, JSON.stringify(this._db), { encoding: 'utf8' });
+    public commit(): void {
+        fs.writeFileSync(this._dbPath, JSON.stringify(this._db), { encoding: 'utf8' });
     }
 }
