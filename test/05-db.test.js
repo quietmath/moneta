@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const assert = require('assert');
 const _ = require('lodash');
-const { JSONStore } = require('../dist/db');
-const { Pair } = require('../dist/pair');
+const JSONStore = require('../lib/db');
+const Pair = require('../lib/pair');
 
 describe('Unit tests for JSONStore class methods', function() {
     

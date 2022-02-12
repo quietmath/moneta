@@ -16,14 +16,14 @@ export interface PairSet {
 export interface ResultSet {
     type: 'select' | 'insert' | 'update' | 'delete';
     success: boolean;
-    key: string | Criteria;
-    requestedKey?: string;
+    key: string | Criteria | undefined;
+    requestedKey?: string | undefined;
     value: any | any[];
 }
 
 export interface Criteria {
-    key?: string;
-    where?: [key: string, value: string];
-    sort?: [key: string | number, direction: 'ASC' | 'DESC'];
-    limit?: number;
+    key?: string | undefined;
+    where?: [key: string, value: string] | undefined;
+    sort?: [key: string | number, direction: 'ASC' | 'DESC'] | undefined;
+    limit?: number | undefined;
 }

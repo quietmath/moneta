@@ -1,10 +1,10 @@
-import * as NodeCache from 'node-cache';
+import NodeCache from 'node-cache';
 
 /**
  * @module quietmath/moneta
  */
 
-export class Cache {
+export default class Cache {
     private _cache: NodeCache;
     constructor(ttlSeconds: number) {
         this._cache = new NodeCache({

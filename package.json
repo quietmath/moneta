@@ -1,9 +1,9 @@
 {
   "name": "@quietmath/moneta",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A Node.JS JSON store for lightweight database storage need.",
-  "main": "./dist/index.js",
-  "private" :false,
+  "main": "./lib/index.js",
+  "private": false,
   "nyc": {
     "all": true,
     "check-coverage": true,
@@ -34,28 +34,33 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/quietmath/moneta.git",
+    "url": "git+https://github.com/quietmath/moneta.git"
   },
   "bugs": {
     "url": "https://github.com/quietmath/moneta/issues"
   },
   "homepage": "https://github.com/quietmath/moneta#readme",
   "scripts": {
-    "build": "tsc -p ./tsconfig",
+    "build": "tsc -p ./tsconfig.json",
     "test": "nyc mocha ./**/test/*.test.js --ignore ./**/node_modules/**",
     "eslint": "eslint ./src/*.ts ./src/**/*.ts",
-    "eslint-fix": "eslint ./src/*.ts ./src/**/*.ts --fix"
+    "eslint-fix": "eslint ./src/*.ts ./src/**/*.ts --fix",
+    "audit": "npm audit --audit-level=high"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
     "fs-extra": "^9.0.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "node-cache": "^5.1.2"
   },
   "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/lodash": "^4.14.178",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
     "eslint": "^7.8.0",
     "exorcist": "^1.0.1",
-    "madge": "^3.9.0",
+    "madge": "^5.0.1",
     "mocha": "^7.2.0",
     "nyc": "^15.0.1",
     "rewire": "^5.0.0",

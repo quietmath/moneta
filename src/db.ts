@@ -1,26 +1,26 @@
 import * as fs from 'fs-extra';
 import { cloneDeep } from 'lodash';
 import { Criteria, DBSettings, PairSet, ResultSet } from './schema';
-import { Cache } from './cache';
+import Cache from './cache';
 import { mapArray } from './util';
 
 /**
  * @module quietmath/moneta
  */
 
-export class JSONStore extends Cache {
+export default class JSONStore extends Cache {
     private _db: any;
     private _dbName: string;
     private _dbPath: string;
-    private _settings: DBSettings;
+    private _settings: Partial<DBSettings> = {};
     constructor(opts?: string | DBSettings) {
         super((opts as DBSettings)?.cacheTTL || 3600);
         if(typeof(opts) === 'string') {
             this._dbName = opts;
         }
         else {
-            this._settings = opts;
-            this._dbName = this._settings.dbname;
+            this._settings = opts as DBSettings;
+            this._dbName = this._settings.dbname as string;
         }
         const name = this._dbName || 'db.json';
         const path = this._settings?.path || process.cwd();
@@ -73,7 +73,7 @@ export class JSONStore extends Cache {
             };
         }
         let result = cloneDeep(this._db[tableName]);
-        let arrayResult: any[];
+        let arrayResult: any[] = [];
         if(criteria?.key != null) {
             result = result[criteria.key];
         }
@@ -94,25 +94,26 @@ export class JSONStore extends Cache {
         }
         if(criteria?.sort != null) {
             let r: any[];
-            if(typeof(criteria.sort[0]) === 'string') {
+            const sort = (criteria as Criteria).sort as [key: string | number, direction: 'ASC' | 'DESC'];
+            if(typeof(sort[0]) === 'string') {
                 if(criteria.sort[1].toUpperCase() === 'ASC') {
-                    r = Object.entries(result).sort((a: any, b: any) => a[1][criteria.sort[0]].localeCompare(b[1][criteria.sort[0]]));
+                    r = Object.entries(result).sort((a: any, b: any) => a[1][sort[0]].localeCompare(b[1][sort[0]]));
                 }
                 else {
-                    r = Object.entries(result).sort((a: any, b: any) => b[1][criteria.sort[0]].localeCompare(a[1][criteria.sort[0]]));
+                    r = Object.entries(result).sort((a: any, b: any) => b[1][sort[0]].localeCompare(a[1][sort[0]]));
                 }
             }
             else {
                 if(criteria.sort[1].toUpperCase() === 'ASC') {
-                    r = Object.entries(result).sort((a: any, b: any) => b[1][criteria.sort[0]]- a[1][criteria.sort[0]]);
+                    r = Object.entries(result).sort((a: any, b: any) => b[1][sort[0]]- a[1][sort[0]]);
                 }
                 else {
-                    r = Object.entries(result).sort((a: any, b: any) => a[1][criteria.sort[0]]- b[1][criteria.sort[0]]);
+                    r = Object.entries(result).sort((a: any, b: any) => a[1][sort[0]]- b[1][sort[0]]);
                 }
             }
             arrayResult = mapArray(r);
         }
-        if(!arrayResult) {
+        if(arrayResult.length === 0) {
             arrayResult = mapArray(Object.entries(result));
         }
         if(criteria?.limit) {
@@ -133,7 +134,7 @@ export class JSONStore extends Cache {
             return {
                 type: 'insert',
                 success: false,
-                key: null,
+                key: undefined,
                 requestedKey: key,
                 value: value
             };
@@ -181,7 +182,7 @@ export class JSONStore extends Cache {
         return {
             type: 'update',
             success: false,
-            key: null,
+            key: undefined,
             requestedKey: key,
             value: value
         };
@@ -202,7 +203,7 @@ export class JSONStore extends Cache {
         return {
             type: 'delete',
             success: false,
-            key: null,
+            key: undefined,
             requestedKey: key,
             value: null
         };

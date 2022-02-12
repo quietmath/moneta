@@ -4,16 +4,25 @@
         "module": "commonjs",
         "declaration": true,
         "sourceMap": true,
-        "outDir": "./dist",
+        "outDir": "./lib",
         "rootDir": "./src",
+        "types": [
+          "node"
+        ],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "resolveJsonModule": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "lib": ["ESNext"]
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "strict": true,
+        "noUnusedLocals": true
     },
     "include": [
         "src/**/*"
     ]
-}
+  }
+  

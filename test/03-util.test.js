@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const assert = require('assert');
-const { mapArray } = require('../dist/util');
+const { mapArray } = require('../lib/util');
 
 describe('Unit tests for utility functions', function() {
 
