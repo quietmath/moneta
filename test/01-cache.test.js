@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const assert = require('assert');
-const Cache = require('../lib/cache');
+const { Cache } = require('../lib/cache');
 
 describe('Unit tests for cache class', function() {
     let cache;

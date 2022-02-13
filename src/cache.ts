@@ -4,7 +4,7 @@ import NodeCache from 'node-cache';
  * @module quietmath/moneta
  */
 
-export default class Cache {
+export class Cache {
     private _cache: NodeCache;
     constructor(ttlSeconds: number) {
         this._cache = new NodeCache({

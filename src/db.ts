@@ -1,14 +1,14 @@
 import * as fs from 'fs-extra';
 import { cloneDeep } from 'lodash';
 import { Criteria, DBSettings, PairSet, ResultSet } from './schema';
-import Cache from './cache';
+import { Cache } from './cache';
 import { mapArray } from './util';
 
 /**
  * @module quietmath/moneta
  */
 
-export default class JSONStore extends Cache {
+export class JSONStore extends Cache {
     private _db: any;
     private _dbName: string;
     private _dbPath: string;

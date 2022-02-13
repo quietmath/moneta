@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const assert = require('assert');
-const JSONStore = require('../lib/db');
+const { JSONStore } = require('../lib/db');
 
 describe('Unit tests for JSONStore class initialization', function() {
     it('should create a JSONStore object with just a name', function() {

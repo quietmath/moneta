@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const assert = require('assert');
-const Pair = require('../lib/pair');
+const { Pair } = require('../lib/pair');
 
 describe('Unit tests for creating pairs for bulk actions', function() {
 

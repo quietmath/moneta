@@ -4,7 +4,7 @@ import { PairSet } from './schema';
  * @module quietmath/moneta
  */
 
-export default class Pair {
+export class Pair {
     public static asPairs(key: string | string[], data: any[]): PairSet[] {
         if(typeof(key) !== 'string') {
             if(key.length !== data.length) {
