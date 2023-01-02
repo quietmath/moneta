@@ -19,10 +19,18 @@
         }
     },
     "rules": {
+        "@typescript-eslint/ban-types": "warn",
         "semi": [
             "error",
             "always"
         ],
+        "comma-dangle": ["error", {
+            "arrays": "never",
+            "objects": "never",
+            "imports": "never",
+            "exports": "never",
+            "functions": "never"
+        }],
         "no-return-await": 0,
         "space-before-function-paren": [
             "error",
@@ -42,10 +50,6 @@
         "template-curly-spacing": [
             "error",
             "always"
-        ],
-        "@typescript-eslint/indent": [
-            "error",
-            4
         ],
         "@typescript-eslint/interface-name-prefix": 0,
         "@typescript-eslint/no-explicit-any": 0,
